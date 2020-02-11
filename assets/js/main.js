@@ -18,7 +18,7 @@ jQuery(function ($) {
 
     /* Locate the user */
     map.locate({
-        setView: true, 
+        setView: true,
         maxZoom: 12
     }).on('locationfound', function (e) {
         lat = e.latitude;
@@ -39,5 +39,20 @@ jQuery(function ($) {
         lng = 4.85;
     });
 
+    /* Get the charges */
+    var urlCharge = ' https://api.openchargemap.io/v3/poi/?output=json&countrycode=FR';
+
+    $.ajax({
+        url: urlCharge
+    }).done(function (data) {
+        $.each(data, function(i, item) {
+            map.addLayer(
+                L.marker([
+                    item.AddressInfo.Latitude, 
+                    item.AddressInfo.Longitude
+                ])
+            );
+        });
+    });
 
 });
