@@ -17,14 +17,16 @@ jQuery(function ($) {
     }).addTo(map);
 
     /* Locate the user */
-    map.locate({ setView: true, watch: true })
-        .on('locationfound', function (e) {
-            lat = e.latitude;
-            lng = e.longitude;
-        })
-        .on('locationerror', function (e) {
-            
-        });
+    map.locate({
+        setView: true, 
+        maxZoom: 12
+    }).on('locationfound', function (e) {
+        lat = e.latitude;
+        lng = e.longitude;
+    }).on('locationerror', function (e) {
+        lat = 45.75;
+        lng = 4.85;
+    });
 
 
 });
