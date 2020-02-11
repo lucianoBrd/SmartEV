@@ -23,6 +23,17 @@ jQuery(function ($) {
     }).on('locationfound', function (e) {
         lat = e.latitude;
         lng = e.longitude;
+
+        var marker = L.marker([lat, lng]).bindPopup('Vous êtes ici en somme');
+        var circle = L.circle([lat, lng], e.accuracy / 2, {
+            weight: 1,
+            color: 'blue',
+            fillColor: '#cacaca',
+            fillOpacity: 0.2
+        });
+        map.addLayer(marker);
+        map.addLayer(circle);
+
     }).on('locationerror', function (e) {
         lat = 45.75;
         lng = 4.85;
