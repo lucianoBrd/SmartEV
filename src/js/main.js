@@ -1,3 +1,6 @@
+jQuery = require('jquery');
+$ = require('jquery');
+
 jQuery(function ($) {
 
     /* Default Lyon position */
@@ -48,7 +51,7 @@ jQuery(function ($) {
         $.each(data, function(i, item) {
             map.addLayer(
                 L.marker([
-                    item.AddressInfo.Latitude, 
+                    item.AddressInfo.Latitude,
                     item.AddressInfo.Longitude
                 ])
             );
