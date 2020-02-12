@@ -1,15 +1,13 @@
-jQuery(function ($) {
+jQuery = require('jquery');
+$ = require('jquery');
 
-    /* Default Lyon position */
-    var lat = 45.75;
-    var lng = 4.85;
-    var url = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
+jQuery(function ($) {
 
     /* Create the map */
     var map = L.map('mapid').setView([lat, lng], 5);
 
     /* Load the map */
-    L.tileLayer(url, {
+    L.tileLayer(URLS['loadMap'], {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
         id: 'mapbox/streets-v11',
@@ -39,16 +37,13 @@ jQuery(function ($) {
         lng = 4.85;
     });
 
-    /* Get the charges */
-    var urlCharge = ' https://api.openchargemap.io/v3/poi/?output=json&countrycode=FR';
-
     $.ajax({
-        url: urlCharge
+        url: URLS['charges']
     }).done(function (data) {
         $.each(data, function(i, item) {
             map.addLayer(
                 L.marker([
-                    item.AddressInfo.Latitude, 
+                    item.AddressInfo.Latitude,
                     item.AddressInfo.Longitude
                 ])
             );
