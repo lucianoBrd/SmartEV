@@ -13,4 +13,8 @@ jQuery(function ($) {
     loadCharges(map);
 
 
+    map.on('click',function (event) {
+        reverseGeocoding(event.latlng['lat'], event.latlng['lng']);
+    })
+
 });
