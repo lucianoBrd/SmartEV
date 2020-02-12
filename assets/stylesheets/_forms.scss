@@ -1,0 +1,40 @@
+select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+}
+
+.input-style {
+    border-top-style: none !important;
+    border-left-style: none !important;
+    border-right-style: none !important;
+    border-radius: 0 !important;
+
+    &:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: inherit !important;
+        border-bottom-color: #ffbaba !important;
+        outline: 0;
+        box-shadow: none !important;
+    }
+}
+
+button {
+    transition: background-color 0.3s, border-radius 0.3s !important;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #ffdddc;
+        border-radius: 2rem !important;
+    }
+}
+
+.label-style {
+    border: none !important;
+    background-color: white !important;
+}
+
+.title {
+    font-family: 'Monoton', cursive;
+}

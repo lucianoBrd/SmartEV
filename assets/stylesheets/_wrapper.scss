@@ -1,0 +1,37 @@
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    transition: margin-left 0.5s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+
+    .label-style {
+        margin-left: 155px;
+        position: absolute;
+    }
+}
+
+#sidebarCollapse {
+    font-size: 100%;
+    height: fit-content;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+}
+
