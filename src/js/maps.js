@@ -41,6 +41,7 @@ loadMaps = function (map) {
         });
         map.addLayer(marker);
         map.addLayer(circle);
+        loadCharges(map, lat, lng);
 
     }).on('locationerror', function (e) {
         lat = 45.75;
@@ -77,8 +78,38 @@ loadCharges = function (map, lat, lng) {
                         item.AddressInfo.Longitude
                     ],
                     {icon: markerIcon}
+                ).bindPopup(
+                    informationPopup(item)
                 )
             );
         });
     });
+}
+
+/**
+ * Get an information popup for a charge marker
+ */
+informationPopup = function (charge) {
+    var popup = '';
+    popup += '<div>';
+
+    /* Add a title */
+    popup += '<p>';
+    popup += charge.AddressInfo.Title;
+    popup += '</p>';
+    
+    /* Add the address */
+    popup += '<p>';
+    popup += charge.AddressInfo.AddressLine1 + ', ' + charge.AddressInfo.Town;
+    popup += '</p>';
+
+    /* Add the general comment */
+    if (charge.AddressInfo.GeneralComments) {
+        popup += '<p>';
+        popup += charge.AddressInfo.GeneralComments;
+        popup += '</p>';
+    }
+
+    popup += '</div>';
+    return popup;
 }
