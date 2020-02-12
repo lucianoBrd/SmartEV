@@ -2,7 +2,7 @@
 
 URLS = {
     "loadMap": 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-    "charges": 'https://api.openchargemap.io/v3/poi/?output=json&countrycode=FR'
+    "charges": 'https://api.openchargemap.io/v3/poi/?output=json&compact=true'
 };
 
 /* Default Lyon position */
