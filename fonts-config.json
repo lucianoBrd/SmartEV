@@ -1,0 +1,34 @@
+{
+  "google-fonts-plugin": {
+    "fonts": [
+      {
+        "family": "Monoton",
+        "variants": [
+          "400",
+          "400i",
+          "700",
+          "700i"
+        ],
+        "subsets": [
+          "latin-ext"
+        ]
+      },
+      {
+        "family": "Tomorrow",
+        "variants": [
+          "400",
+          "400i",
+          "700",
+          "700i"
+        ],
+        "subsets": [
+          "latin-ext"
+        ]
+      }
+    ],
+    "formats": [
+      "woff",
+      "woff2"
+    ]
+  }
+}
