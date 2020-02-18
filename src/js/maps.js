@@ -65,6 +65,7 @@ loadCharges = function (map) {
 
     });
 
+    /* Create the cluster group */
     var markers = L.markerClusterGroup();
 
     /* Request to get the charges */
@@ -111,14 +112,34 @@ informationPopup = function (charge) {
     popup += '<div>';
 
     /* Add a title */
-    popup += '<p>';
-    popup += charge.AddressInfo.Title;
-    popup += '</p>';
+    if (charge.AddressInfo.Title) {
+        popup += '<h2>';
+        popup += charge.AddressInfo.Title;
+        popup += '</h2>';
+    }
 
     /* Add the address */
-    popup += '<p>';
-    popup += charge.AddressInfo.AddressLine1 + ', ' + charge.AddressInfo.Town;
-    popup += '</p>';
+    if (charge.AddressInfo.AddressLine1 || charge.AddressInfo.Town) {
+        popup += '<p>';
+        if (charge.AddressInfo.AddressLine1) {
+            popup += charge.AddressInfo.AddressLine1;
+        }
+        if (charge.AddressInfo.AddressLine1 && charge.AddressInfo.Town) {
+            popup += ', ';
+            popup += charge.AddressInfo.AddressLine1;
+        }
+        if (charge.AddressInfo.Town) {
+            popup += charge.AddressInfo.Town;
+        }
+        popup += '</p>';
+    }
+    
+    /* Add the general post code */
+    if (charge.AddressInfo.Postcode) {
+        popup += '<p>';
+        popup += charge.AddressInfo.Postcode;
+        popup += '</p>';
+    }
 
     /* Add the general comment */
     if (charge.AddressInfo.GeneralComments) {
@@ -127,6 +148,28 @@ informationPopup = function (charge) {
         popup += '</p>';
     }
 
+    /* Add information about the connector */
+    $.each(charge.Connections, function (i, item) {
+        
+        popup += '<h3>Chargeur ' + (i + 1) + '</h3>';
+
+        if (item.ConnectionType && item.ConnectionType.Title) {
+            popup += '<p>';
+            popup += 'Type : '
+            popup += item.ConnectionType.Title;
+            popup += '</p>';
+        } /* Type of connector */
+
+        if (item.PowerKW) {
+            popup += '<p>';
+            popup += 'Puissance : '
+            popup += item.PowerKW;
+            popup += ' KW';
+            popup += '</p>';
+            
+        } /* Power of connector */
+    });
+    
     popup += '</div>';
     return popup;
 }
