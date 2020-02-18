@@ -38,3 +38,11 @@ button {
 .title {
     font-family: 'Monoton', cursive;
 }
+
+.locate-me {
+    cursor: pointer;
+
+    &.active {
+        color: #ffbaba;
+    }
+}
