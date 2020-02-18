@@ -29,7 +29,6 @@ initializeListeners = function (map) {
         var error = false;
         $.each(TRIP, function (key, item) {
             if (item['lat'] == null || item['lng'] == null) {
-                console.log("IKBOUL");
                 error = true;
             }
         });
@@ -40,7 +39,6 @@ initializeListeners = function (map) {
     });
 
     $(document).on('calculate-trip', function () {
-        console.log(L);
         L.Routing.control({
                               waypoints: [
                                   L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
