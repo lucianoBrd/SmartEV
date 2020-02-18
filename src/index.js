@@ -10,5 +10,6 @@ import '@fortawesome/fontawesome-free/js/all'
 import './js/variables'
 import './js/animations'
 import './js/geocoding'
+import './js/listeners';
 import './js/main';
 import 'leaflet.markercluster';

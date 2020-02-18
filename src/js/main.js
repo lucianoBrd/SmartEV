@@ -5,6 +5,7 @@ jQuery(function ($) {
 
     /* Create the map */
     var map = L.map('mapid').setView([lat, lng], 5);
+    initializeListeners($, map);
 
     /* Initialize maps */
     loadMaps(map);
@@ -12,9 +13,5 @@ jQuery(function ($) {
     /* Load charges */
     loadCharges(map);
 
-
-    map.on('click',function (event) {
-        reverseGeocoding(event.latlng['lat'], event.latlng['lng']);
-    })
 
 });

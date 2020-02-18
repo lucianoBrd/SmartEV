@@ -1,9 +1,9 @@
-reverseGeocoding = function(lat, lng) {
+reverseGeocoding = function($, lat, lng) {
 
-    const url = "https://eu1.locationiq.com/v1/reverse.php?key="+locationIQToken+"&lat="+lat+"&lon="+lng+"&format=json";
+    var url = "https://eu1.locationiq.com/v1/reverse.php?key="+locationIQToken+"&lat="+lat+"&lon="+lng+"&format=json";
 
     $.ajax({url: url, success: function(result){
             console.log(result);
+            $(document).trigger("reverse-geocoding-done", result);
     }});
-
 };

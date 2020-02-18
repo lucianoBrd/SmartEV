@@ -8,3 +8,5 @@ URLS = {
 /* Default Lyon position */
 lat = 45.75;
 lng = 4.85;
+
+activeLocateMeInput = null;
