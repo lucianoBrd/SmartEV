@@ -5,3 +5,4 @@ import './lib/leaflet/leaflet';
 import './js/variables';
 import './js/maps';
 import './js/main';
+import 'leaflet.markercluster';

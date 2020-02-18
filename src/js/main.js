@@ -10,6 +10,7 @@ jQuery(function ($) {
     loadMaps(map);
 
     /* Load charges */
-    loadCharges(map, lat, lng);
+    loadCharges(map);
+
 
 });

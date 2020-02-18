@@ -14,9 +14,9 @@ loadMaps = function (map) {
     var markerIcon = L.icon({
         iconUrl: 'public/images/marker.png',
 
-        iconSize:     [38, 38], // size of the icon
-        iconAnchor:   [22, 37], // point of the icon which will correspond to marker's location
-        popupAnchor:  [-3, -20] // point from which the popup should open relative to the iconAnchor
+        iconSize: [38, 38], // size of the icon
+        iconAnchor: [22, 37], // point of the icon which will correspond to marker's location
+        popupAnchor: [-3, -20] // point from which the popup should open relative to the iconAnchor
 
     });
 
@@ -29,8 +29,8 @@ loadMaps = function (map) {
         lng = e.longitude;
 
         var marker = L.marker(
-            [lat, lng], 
-            {icon: markerIcon}
+            [lat, lng],
+            { icon: markerIcon }
         ).bindPopup('Vous êtes ici en somme');
 
         var circle = L.circle([lat, lng], e.accuracy / 2, {
@@ -41,7 +41,9 @@ loadMaps = function (map) {
         });
         map.addLayer(marker);
         map.addLayer(circle);
-        loadCharges(map, lat, lng);
+
+        /* Change the map center to the location */
+        map.flyTo([lat, lng], 12)
 
     }).on('locationerror', function (e) {
         lat = 45.75;
@@ -50,39 +52,54 @@ loadMaps = function (map) {
 }
 
 /**
- * Load charges near a position
+ * Load charges
  */
-loadCharges = function (map, lat, lng) {
+loadCharges = function (map) {
     /* Create the icon marker */
     var markerIcon = L.icon({
         iconUrl: 'public/images/charger.png',
 
-        iconSize:     [38, 38], // size of the icon
-        iconAnchor:   [22, 37], // point of the icon which will correspond to marker's location
-        popupAnchor:  [-3, -20] // point from which the popup should open relative to the iconAnchor
+        iconSize: [38, 38], // size of the icon
+        iconAnchor: [22, 37], // point of the icon which will correspond to marker's location
+        popupAnchor: [-3, -20] // point from which the popup should open relative to the iconAnchor
 
     });
 
-    /* Add parameters to the url */
-    var url = URLS['charges'] + '&latitude=' + lat + '&longitude=' + lng + '&distance=3';
+    var markers = L.markerClusterGroup();
 
     /* Request to get the charges */
     $.ajax({
-        url: url
+        url: URLS['charges']
     }).done(function (data) {
-        $.each(data, function(i, item) {
-            map.addLayer(
+
+        /* Parse data to json */
+        var chargeData = data;
+        if (chargeData) {
+            chargeData = JSON.parse(
+                JSON.stringify(data)
+            );
+        }
+        $.each(chargeData, function (i, item) {
+            marker =
                 L.marker(
                     [
                         item.AddressInfo.Latitude,
                         item.AddressInfo.Longitude
                     ],
-                    {icon: markerIcon}
+                    { icon: markerIcon }
                 ).bindPopup(
                     informationPopup(item)
-                )
+                );
+            
+            markers.addLayer(marker);
+            map.addLayer(
+                markers
             );
         });
+
+
+    }).fail(function (data) {
+        console.log(data);
     });
 }
 
@@ -97,7 +114,7 @@ informationPopup = function (charge) {
     popup += '<p>';
     popup += charge.AddressInfo.Title;
     popup += '</p>';
-    
+
     /* Add the address */
     popup += '<p>';
     popup += charge.AddressInfo.AddressLine1 + ', ' + charge.AddressInfo.Town;
