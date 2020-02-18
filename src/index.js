@@ -4,6 +4,7 @@ require('@fortawesome/fontawesome-free/scss/fontawesome.scss');
 
 import './js/token';
 import './lib/leaflet/leaflet';
+import 'leaflet-routing-machine';
 import './js/variables';
 import './js/maps';
 import '@fortawesome/fontawesome-free/js/all'
