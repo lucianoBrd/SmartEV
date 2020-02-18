@@ -24,6 +24,7 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "google-fonts-plugin": "^5.0.2",
     "node-sass": "^4.13.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.2",
@@ -33,7 +34,9 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "jquery": "^3.4.1",
     "leaflet.markercluster": "^1.4.1"
+    "@fortawesome/fontawesome-free": "^5.12.1",
+    "bootstrap-scss": "^4.4.1",
+    "jquery": "^3.4.1"
   }
 }
