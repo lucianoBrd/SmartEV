@@ -64,7 +64,7 @@
                             <div class="form-group mb-4 d-flex flex-row justify-content-around">
                                 <label class="input-group-text label-style" for="location"><i class="fas fa-search-location"></i></label>
                                 <input type="text" class="form-control input-style" id="location" placeholder="Départ">
-                                <span class="align-self-center locate-me" data-input-id="location" data-toggle="popover" data-placement="right">
+                                <span class="align-self-center locate-me" data-input-id="location" data-step="departure" data-toggle="popover" data-placement="right">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </span>
                             </div>
@@ -73,7 +73,7 @@
                             <div class="form-group d-flex flex-row justify-content-around">
                                 <label class="input-group-text label-style" for="destination"><i class="fab fa-telegram-plane"></i></label>
                                 <input type="text" class="form-control input-style" id="destination" placeholder="Arrivée">
-                                <span class="align-self-center locate-me" data-input-id="destination" data-toggle="popover" data-placement="right">
+                                <span class="align-self-center locate-me" data-input-id="destination" data-step="destination" data-toggle="popover" data-placement="right">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </span>
                             </div>
@@ -81,7 +81,7 @@
                             <!-- Submit button -->
                             <div class="form-group d-flex flex-row justify-content-around">
                                 <label class="input-group-text label-style"><i class="fas fa-search"></i></label>
-                                <button type="button" class="form-control input-style">Rechercher</button>
+                                <button type="button" id="search-trip" class="form-control input-style">Rechercher</button>
                             </div>
 
                         </form>
