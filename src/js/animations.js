@@ -13,4 +13,9 @@ window.onload = function () {
             activeLocateMeInput = null;
         }
     });
+
+    $('.collapse-handler').on('click', function(){
+        var collapseId = $(this).data('collapse');
+        $('.collapsible[data-collapse-id='+collapseId+']').toggleClass('d-none');
+    });
 };

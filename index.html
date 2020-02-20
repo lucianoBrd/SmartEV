@@ -37,57 +37,85 @@
 
             <!-- Sidebar -->
             <nav id="sidebar">
-                <div class="row d-flex flex-column justify-content-around">
+                <div class="row d-flex flex-column justify-content-around mx-0">
                     <!-- Page title -->
-                    <span class="title col-md-12 h1 text-center mb-5">
-                       SmartEV
+                    <span class="title col-md-12 h1 text-center mb-2 p-0">
+                        SmartEV
+                        <hr class="my-2">
                     </span>
-                    <hr class="mb-5">
 
-                    <!-- Forme begining -->
-                    <div class="col-md-12 d-flex justify-content-center flex-column">
-                        <span class="itineraire h3 text-center ">
-                           Itinéraire personnalisé
-                        </span>
+                    <div class="p-0 scrollable">
+                        <!-- Form begining -->
+                        <div class="col-md-12 d-flex justify-content-center flex-column px-0">
+                            <span class="itineraire h5 text-center collapse-handler" data-collapse="trip-div">
+                                Itinéraire personnalisé
+                                <i class="fas fa-caret-down"></i>
+                                <hr>
+                            </span>
 
-                        <form class="p-3">
-                            <!-- Car selector -->
-                            <div class="input-group mb-4 d-flex flex-row justify-content-around">
-                                <label class="input-group-text label-style" for="carSelection"><i class="fas fa-car"></i></label>
-                                <select class="custom-select input-style" id="carSelection">
-                                    <option value="zoe" selected>Renault Zoe</option>
-                                    <option value="model3">Tesla model 3</option>
-                                </select>
+                            <div class="collapsible d-none" data-collapse-id="trip-div">
+                                <form class="p-3">
+                                    <!-- Car selector -->
+                                    <div class="input-group mb-4 d-flex flex-row justify-content-around">
+                                        <label class="input-group-text label-style" for="carSelection">
+                                            <i class="fas fa-car"></i>
+                                        </label>
+                                        <select class="custom-select input-style" id="carSelection">
+                                            <option value="zoe" selected>Renault Zoe</option>
+                                            <option value="model3">Tesla model 3</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Departure input -->
+                                    <div class="form-group mb-4 d-flex flex-row justify-content-around">
+                                        <label class="input-group-text label-style" for="location"><i
+                                                class="fas fa-search-location"></i></label>
+                                        <input list="departure-list" type="text" class="form-control input-style input-location" id="location" placeholder="Départ">
+                                        <datalist id="departure-list"></datalist>
+                                        <span class="align-self-center locate-me" data-input-id="location"
+                                            data-step="departure" data-toggle="popover" data-placement="right">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </span>
+                                    </div>
+
+                                    <!-- Destination input -->
+                                    <div class="form-group d-flex flex-row justify-content-around">
+                                        <label class="input-group-text label-style" for="destination"><i
+                                                class="fab fa-telegram-plane"></i></label>
+                                        <input list="destination-list" type="text" class="form-control input-style input-location" id="destination" placeholder="Arrivée">
+                                        <datalist id="destination-list"></datalist>
+                                        <span class="align-self-center locate-me" data-input-id="destination"
+                                            data-step="destination" data-toggle="popover" data-placement="right">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </span>
+                                    </div>
+
+                                    <!-- Submit button -->
+                                    <div class="form-group d-flex flex-row justify-content-around">
+                                        <label class="input-group-text label-style"><i
+                                                class="fas fa-search"></i></label>
+                                        <button type="button" id="search-trip"
+                                            class="form-control input-style">Rechercher</button>
+                                    </div>
+
+                                </form>
                             </div>
+                        </div>
+                        <div class="col-md-12 d-flex flex-column justify-content-around px-0">
+                            <span class="itineraire h5 text-center collapse-handler" data-collapse="road-sheet">
+                                Feuille de route
+                                <i class="fas fa-caret-down"></i>
+                                <hr class="my-2">
+                            </span>
 
-                            <!-- Departure input -->
-                            <div class="form-group mb-4 d-flex flex-row justify-content-around">
-                                <label class="input-group-text label-style" for="location"><i class="fas fa-search-location"></i></label>
-                                <input list="departure-list" type="text" class="form-control input-style input-location" id="location" placeholder="Départ">
-                                <datalist id="departure-list"></datalist>
-                                <span class="align-self-center locate-me" data-input-id="location" data-step="departure" data-toggle="popover" data-placement="right">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </span>
+                            <div id="roadSheet" class="collapsible d-none roadSheet" data-collapse-id="road-sheet">
+                                <div id="#roadSheetList" class="list-group-flush roadSheetList">
+
+                                </div>
                             </div>
-
-                            <!-- Destination input -->
-                            <div class="form-group d-flex flex-row justify-content-around">
-                                <label class="input-group-text label-style" for="destination"><i class="fab fa-telegram-plane"></i></label>
-                                <input list="destination-list" type="text" class="form-control input-style input-location" id="destination" placeholder="Arrivée">
-                                <datalist id="destination-list"></datalist>
-                                <span class="align-self-center locate-me" data-input-id="destination" data-step="destination" data-toggle="popover" data-placement="right">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </span>
-                            </div>
-
-                            <!-- Submit button -->
-                            <div class="form-group d-flex flex-row justify-content-around">
-                                <label class="input-group-text label-style"><i class="fas fa-search"></i></label>
-                                <button type="button" id="search-trip" class="form-control input-style">Rechercher</button>
-                            </div>
-
-                        </form>
+                        </div>
                     </div>
+
                 </div>
             </nav>
         </div>

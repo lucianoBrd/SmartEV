@@ -2,6 +2,25 @@ body {
     font-family: "Tomorrow", cursive !important;
 }
 
+.collapsible {
+    transition: display 0.5s;
+}
+
+.collapse-handler {
+    transition: color 0.1s;
+    border-radius: 3rem;
+    &:hover {
+        cursor: pointer;
+        color: #ffdddc;
+    }
+}
+
+.w-250 {
+    width: 250px !important;
+}
+
+
+
 
 
 

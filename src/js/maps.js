@@ -173,3 +173,23 @@ informationPopup = function (charge) {
     popup += '</div>';
     return popup;
 }
+
+displayRoadSheet = function(routes) {
+    console.log(routes);
+    $("#roadSheet").toggleClass('active');
+    console.log($("#roadSheet"));
+    $.each(routes.instructions, function(key, item){
+        console.log(item);
+        var add = "<a href='#'"+"class='list-group-item list-group-item-action flex-column align-items-start'>"
+        add += "<div class='d-flex w-100 justify-content-between'>";
+        add += "<h5 class='mb-1'>"+item.road+"</h5>";
+        add += "<small>"+item.type+"</small>";                
+        add += "</div>";
+        add += "<p class='mb-1'>"+item.text+"</p>";
+        add += "</a>";
+    
+        $("#roadSheetList")[0].innerHTML += add;
+        console.log($("#roadSheetList")[0]);
+
+    });
+}

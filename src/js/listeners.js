@@ -45,10 +45,15 @@ initializeListeners = function (map) {
 
     $(document).on('calculate-trip', function () {
         L.Routing.control({
-            waypoints: [
-                L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
-                L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
-            ]
+              waypoints: [
+                  L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
+                  L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
+              ],
+              router: L.Routing.mapbox(token),
+              position: 'topleft'
+          })
+          .on('routeselected', function(e) {
+            displayRoadSheet(e.route)
         }).addTo(map);
     });
 };
