@@ -12,5 +12,6 @@ import './js/variables'
 import './js/animations'
 import './js/geocoding'
 import './js/listeners';
+import './js/autocomplete';
 import './js/main';
 import 'leaflet.markercluster';

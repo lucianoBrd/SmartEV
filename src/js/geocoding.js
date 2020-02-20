@@ -1,4 +1,4 @@
-reverseGeocoding = function($, lat, lng) {
+reverseGeocoding = function(lat, lng) {
 
     var url = URLS['reverseGeocoding']+locationIQToken+"&lat="+lat+"&lon="+lng+"&format=json";
 

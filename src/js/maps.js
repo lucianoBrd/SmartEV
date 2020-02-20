@@ -23,7 +23,7 @@ loadMaps = function (map) {
     /* Locate the user */
     map.locate({
         setView: true,
-        maxZoom: 12
+        maxZoom: 11
     }).on('locationfound', function (e) {
         lat = e.latitude;
         lng = e.longitude;
@@ -43,7 +43,7 @@ loadMaps = function (map) {
         map.addLayer(circle);
 
         /* Change the map center to the location */
-        map.flyTo([lat, lng], 12)
+        map.flyTo([lat, lng], 11)
 
     }).on('locationerror', function (e) {
         lat = 45.75;
