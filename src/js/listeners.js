@@ -3,6 +3,11 @@ initializeListeners = function (map) {
         reverseGeocoding(event.latlng['lat'], event.latlng['lng']);
     });
 
+    $('#location-marker').on('click', function (event) {
+        /* Change the map center to the location */
+        map.flyTo([lat, lng], 11);
+    });
+
     $(document).on('reverse-geocoding-done', function (e, data) {
         if (activeLocateMeInput !== null) {
             activeLocateMeInput.value = data.display_name;
