@@ -6,7 +6,15 @@
     /* Set the height to match that of the viewport. */
     height: 100vh;
 
-
     /* Remove any browser-default margins. */
     margin: 0;
+}
+
+#location-marker {
+    position: fixed;
+    bottom: 20px;
+    right: 5px; 
+    height: 30px;
+    width: 30px;
+    z-index: 800;
 }

@@ -1,6 +1,11 @@
 initializeListeners = function (map) {
     map.on('click', function (event) {
-        reverseGeocoding($, event.latlng['lat'], event.latlng['lng']);
+        reverseGeocoding(event.latlng['lat'], event.latlng['lng']);
+    });
+
+    $('#location-marker').on('click', function (event) {
+        /* Change the map center to the location */
+        map.flyTo([lat, lng], 11);
     });
 
     $(document).on('reverse-geocoding-done', function (e, data) {
@@ -40,10 +45,10 @@ initializeListeners = function (map) {
 
     $(document).on('calculate-trip', function () {
         L.Routing.control({
-                              waypoints: [
-                                  L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
-                                  L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
-                              ]
-                          }).addTo(map);
+            waypoints: [
+                L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
+                L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
+            ]
+        }).addTo(map);
     });
 };
