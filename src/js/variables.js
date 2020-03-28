@@ -29,4 +29,7 @@ activeLocateMeInput = null;
 activeLocateMeInputID = null;
 //the current step
 activeLocateMeStep = null;
+// true if one locate me is active
+locateMeIsActive = false;
 
+userMarkers = [];

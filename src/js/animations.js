@@ -4,13 +4,23 @@ window.onload = function () {
     });
 
     $('.locate-me').on('click', function() {
-        $(this).toggleClass('active');
-        if ($(this).hasClass('active')) {
-            activeLocateMeInputID = $(this).data('input-id');
-            activeLocateMeStep = $(this).data('step');
-            activeLocateMeInput = $("#"+activeLocateMeInputID)[0];
+        if(!locateMeIsActive) {
+            $(this).toggleClass('active');
+            if ($(this).hasClass('active')) {
+                activeLocateMeInputID = $(this).data('input-id');
+                activeLocateMeStep = $(this).data('step');
+                activeLocateMeInput = $("#"+activeLocateMeInputID)[0];
+                locateMeIsActive = true;
+            } else {
+                activeLocateMeInput = null;
+                activeLocateMeInputID = null;
+                activeLocateMeStep = null;
+                locateMeIsActive = false;
+            }
         } else {
-            activeLocateMeInput = null;
+            if($(this).data('step') === activeLocateMeStep) {
+                resetLocateMe();
+            }
         }
     });
 
@@ -18,4 +28,13 @@ window.onload = function () {
         var collapseId = $(this).data('collapse');
         $('.collapsible[data-collapse-id='+collapseId+']').toggleClass('d-none');
     });
+};
+
+resetLocateMe = function() {
+    //unable locate me listener
+    $(".locate-me[data-step="+activeLocateMeStep+"]").toggleClass('active');
+    activeLocateMeStep = null;
+    activeLocateMeInput = null;
+    activeLocateMeInputID = null;
+    locateMeIsActive = false;
 };

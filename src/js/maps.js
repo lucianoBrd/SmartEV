@@ -91,7 +91,7 @@ loadCharges = function (map) {
                 ).bindPopup(
                     informationPopup(item)
                 );
-            
+
             markers.addLayer(marker);
             map.addLayer(
                 markers
@@ -133,7 +133,7 @@ informationPopup = function (charge) {
         }
         popup += '</p>';
     }
-    
+
     /* Add the general post code */
     if (charge.AddressInfo.Postcode) {
         popup += '<p>';
@@ -150,7 +150,7 @@ informationPopup = function (charge) {
 
     /* Add information about the connector */
     $.each(charge.Connections, function (i, item) {
-        
+
         popup += '<h3>Chargeur ' + (i + 1) + '</h3>';
 
         if (item.ConnectionType && item.ConnectionType.Title) {
@@ -166,10 +166,10 @@ informationPopup = function (charge) {
             popup += item.PowerKW;
             popup += ' KW';
             popup += '</p>';
-            
+
         } /* Power of connector */
     });
-    
+
     popup += '</div>';
     return popup;
 }
@@ -183,13 +183,28 @@ displayRoadSheet = function(routes) {
         var add = "<a href='#'"+"class='list-group-item list-group-item-action flex-column align-items-start'>"
         add += "<div class='d-flex w-100 justify-content-between'>";
         add += "<h5 class='mb-1'>"+item.road+"</h5>";
-        add += "<small>"+item.type+"</small>";                
+        add += "<small>"+item.type+"</small>";
         add += "</div>";
         add += "<p class='mb-1'>"+item.text+"</p>";
         add += "</a>";
-    
+
         $("#roadSheetList")[0].innerHTML += add;
         console.log($("#roadSheetList")[0]);
 
     });
 }
+
+addMarker = function(map, item) {
+    var marker = L.marker(
+        [item.lat, item.lon]
+    ).bindPopup(item.display_name);
+    map.addLayer(marker);
+
+    userMarkers.push(marker);
+};
+
+removeUserMarkers = function(map) {
+    $.each(userMarkers, function(key, item) {
+        map.removeLayer(item);
+    })
+};
