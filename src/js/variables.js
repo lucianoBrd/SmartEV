@@ -33,3 +33,22 @@ activeLocateMeStep = null;
 locateMeIsActive = false;
 
 userMarkers = [];
+
+Arrows = {
+    "Default": "arrow-up",
+    "Head": "arrow-up",
+    "SlightRight": "arrow-right",
+    "EndOfRoad": "arrow-up",
+    "Roundabout": "sync",
+    "Fork": "code-branch",
+    "Merge": "arrow-up",
+    "OffRamp": "sign-out-alt",
+    "Right": "arrow-right",
+    "Left": "arrow-left",
+    "SlightLeft": "arrow-left",
+    "DestinationReached": "check-circle",
+    "Continue": "arrow-up",
+    "OnRamp": "arrow-up",
+    "SharpRight":" arrow-right",
+    "SharpLeft": "arrow-left"
+};

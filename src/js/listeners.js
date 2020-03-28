@@ -20,7 +20,7 @@ initializeListeners = function (map) {
             $(document).trigger('display-popover', data.display_name);
 
             addMarker(map, data);
-console.log(userMarkers);
+
             resetLocateMe();
         }
     });
@@ -59,17 +59,19 @@ console.log(userMarkers);
 
     $(document).on('calculate-trip', function () {
         //leaflet calculation
-        L.Routing.control({
+        var control = L.Routing.control({
               waypoints: [
                   L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
                   L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
               ],
-              router: L.Routing.mapbox(token),
-              position: 'topleft'
-          })
-          .on('routeselected', function(e) {
+              router: L.Routing.mapbox(token, {language: 'fr'})
+          });
+        control.on('routeselected', function(e) {
             displayRoadSheet(e.route)
         }).addTo(map);
-         removeUserMarkers(map);
+
+        control._container.style.display = "None";
+
+        removeUserMarkers(map);
     });
 };

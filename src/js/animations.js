@@ -27,6 +27,8 @@ window.onload = function () {
     $('.collapse-handler').on('click', function(){
         var collapseId = $(this).data('collapse');
         $('.collapsible[data-collapse-id='+collapseId+']').toggleClass('d-none');
+        $('i[data-icon='+collapseId+']').toggleClass('fa-caret-right');
+        $('i[data-icon='+collapseId+']').toggleClass('fa-caret-down');
     });
 };
 
