@@ -220,12 +220,35 @@ displayTripTabs = function() {
 };
 
 displayTripInfos = function(routes) {
+    var totalDistance   = routes.summary.totalDistance;
+    var totalTime       = routes.summary.totalTime / 60; /* Second to minute */
+
+    /* Convert distance */
+    if (totalDistance >= 1000) {
+        /* In km */
+        totalDistance = (totalDistance / 1000).toFixed(2) + " KM";
+
+    } else {
+        /* In m */
+        totalDistance = totalDistance.toFixed(2) + " M";
+    }
+
+    /* Convert time */
+    if (totalTime >= 60) {
+        /* In h */
+        totalTime = (totalTime / 60).toFixed(2) + " H";
+
+    } else {
+        /* In mn */
+        totalTime = totalTime.toFixed(2) + " MN";
+    }
+
     var add = "<tr>";
     add += "<td>";
-    add += routes.summary.totalDistance + "KM";
+    add += totalDistance;
     add += "</td>";
     add += "<td>";
-    add += routes.summary.totalTime + "mn";
+    add += totalTime;
     add += "</td>";
     add += "<td>";
     add += routes.name;
