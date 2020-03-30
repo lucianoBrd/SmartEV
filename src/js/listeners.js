@@ -9,7 +9,7 @@ initializeListeners = function (map) {
     });
 
     $(document).on('reverse-geocoding-done', function (e, data) {
-        if (activeLocateMeInput !== null) {
+        if (activeLocateMeInput !== null && !activeTrip) {
             //set the value of reverse geocoding in the input
             activeLocateMeInput.value = data.display_name;
 
@@ -52,25 +52,34 @@ initializeListeners = function (map) {
         });
 
         if (!error) {
-            //if there is no mistake, calculate the trip
-            $(document).trigger('calculate-trip');
+            if (!activeTrip) {
+                /* if there is no mistake, calculate the trip */
+                $(document).trigger('calculate-trip');
+
+                /* Initialize trip */
+                statusForm(true);
+            } else {
+                /* Reset Trip */
+                statusForm(false);
+            }
         }
     });
 
     $(document).on('calculate-trip', function () {
         //leaflet calculation
-        var control = L.Routing.control({
-              waypoints: [
-                  L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
-                  L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
-              ],
-              router: L.Routing.mapbox(token, {language: 'fr'})
-          });
-        control.on('routeselected', function(e) {
+        routing = L.Routing.control({
+            waypoints: [
+                L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
+                L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
+            ],
+            routeWhileDragging: false,
+            router: L.Routing.mapbox(token, { language: 'fr' })
+        });
+        routing.on('routeselected', function (e) {
             displayRoadSheet(e.route)
         }).addTo(map);
 
-        control._container.style.display = "None";
+        routing._container.style.display = "None";
 
         removeUserMarkers(map);
     });

@@ -174,28 +174,28 @@ informationPopup = function (charge) {
     return popup;
 };
 
-displayRoadSheet = function(routes) {
+displayRoadSheet = function (routes) {
 
     displayTripTabs();
 
     displayTripInfos(routes);
 
-    $.each(routes.instructions, function(key, item){
+    $.each(routes.instructions, function (key, item) {
         var direction = Arrows[item.type] !== undefined ? Arrows[item.type] : (Arrows[item.modifier] !== undefined ? Arrows[item.modifier] : Arrows['default']);
 
-        var add = "<a href='#'"+"class='list-group-item list-group-item-action flex-column align-items-start'>";
+        var add = "<a href='#'" + "class='list-group-item list-group-item-action flex-column align-items-start'>";
         add += "<div class='d-flex w-100 justify-content-between'>";
-        add += "<h5 class='mb-1'>"+item.road+"</h5>";
-        add += "<small><i class=\"fas fa-2x text-success fa-"+direction+"\"></i></small>";
+        add += "<h5 class='mb-1'>" + item.road + "</h5>";
+        add += "<small><i class=\"fas fa-2x text-success fa-" + direction + "\"></i></small>";
         add += "</div>";
-        add += "<p class='mb-1'>"+item.text+"</p>";
+        add += "<p class='mb-1'>" + item.text + "</p>";
         add += "</a>";
 
-        $(add).appendTo(".roadSheetList") ;
+        $(add).appendTo(".roadSheetList");
     });
 };
 
-addMarker = function(map, item) {
+addMarker = function (map, item) {
     var marker = L.marker(
         [item.lat, item.lon]
     ).bindPopup(item.display_name);
@@ -204,13 +204,13 @@ addMarker = function(map, item) {
     userMarkers.push(marker);
 };
 
-removeUserMarkers = function(map) {
-    $.each(userMarkers, function(key, item) {
+removeUserMarkers = function (map) {
+    $.each(userMarkers, function (key, item) {
         map.removeLayer(item);
     })
 };
 
-displayTripTabs = function() {
+displayTripTabs = function () {
     $("#trip-container").removeClass("d-none");
     $("#trip-container").addClass("d-flex");
     $("#trip-info-container").removeClass("d-none");
@@ -219,9 +219,9 @@ displayTripTabs = function() {
     $("#road-sheet-container").addClass("d-flex");
 };
 
-displayTripInfos = function(routes) {
-    var totalDistance   = routes.summary.totalDistance;
-    var totalTime       = routes.summary.totalTime / 60; /* Second to minute */
+displayTripInfos = function (routes) {
+    var totalDistance = routes.summary.totalDistance;
+    var totalTime = routes.summary.totalTime / 60; /* Second to minute */
 
     /* Convert distance */
     if (totalDistance >= 1000) {

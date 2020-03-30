@@ -31,6 +31,10 @@ activeLocateMeInputID = null;
 activeLocateMeStep = null;
 // true if one locate me is active
 locateMeIsActive = false;
+// true if user search a trip
+activeTrip = false;
+// Router from view
+routing = null;
 
 userMarkers = [];
 

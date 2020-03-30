@@ -11,6 +11,7 @@ import '@fortawesome/fontawesome-free/js/all'
 import './js/variables'
 import './js/animations'
 import './js/geocoding'
+import './js/reset'
 import './js/listeners';
 import './js/autocomplete';
 import './js/main';
