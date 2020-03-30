@@ -91,7 +91,7 @@ loadCharges = function (map) {
                 ).bindPopup(
                     informationPopup(item)
                 );
-            
+
             markers.addLayer(marker);
             map.addLayer(
                 markers
@@ -133,7 +133,7 @@ informationPopup = function (charge) {
         }
         popup += '</p>';
     }
-    
+
     /* Add the general post code */
     if (charge.AddressInfo.Postcode) {
         popup += '<p>';
@@ -150,7 +150,7 @@ informationPopup = function (charge) {
 
     /* Add information about the connector */
     $.each(charge.Connections, function (i, item) {
-        
+
         popup += '<h3>Chargeur ' + (i + 1) + '</h3>';
 
         if (item.ConnectionType && item.ConnectionType.Title) {
@@ -166,10 +166,71 @@ informationPopup = function (charge) {
             popup += item.PowerKW;
             popup += ' KW';
             popup += '</p>';
-            
+
         } /* Power of connector */
     });
-    
+
     popup += '</div>';
     return popup;
-}
+};
+
+displayRoadSheet = function(routes) {
+
+    displayTripTabs();
+
+    displayTripInfos(routes);
+
+    $.each(routes.instructions, function(key, item){
+        var direction = Arrows[item.type] !== undefined ? Arrows[item.type] : (Arrows[item.modifier] !== undefined ? Arrows[item.modifier] : Arrows['default']);
+
+        var add = "<a href='#'"+"class='list-group-item list-group-item-action flex-column align-items-start'>";
+        add += "<div class='d-flex w-100 justify-content-between'>";
+        add += "<h5 class='mb-1'>"+item.road+"</h5>";
+        add += "<small><i class=\"fas fa-2x text-success fa-"+direction+"\"></i></small>";
+        add += "</div>";
+        add += "<p class='mb-1'>"+item.text+"</p>";
+        add += "</a>";
+
+        $(add).appendTo(".roadSheetList") ;
+    });
+};
+
+addMarker = function(map, item) {
+    var marker = L.marker(
+        [item.lat, item.lon]
+    ).bindPopup(item.display_name);
+    map.addLayer(marker);
+
+    userMarkers.push(marker);
+};
+
+removeUserMarkers = function(map) {
+    $.each(userMarkers, function(key, item) {
+        map.removeLayer(item);
+    })
+};
+
+displayTripTabs = function() {
+    $("#trip-container").removeClass("d-none");
+    $("#trip-container").addClass("d-flex");
+    $("#trip-info-container").removeClass("d-none");
+    $("#trip-info-container").addClass("d-flex");
+    $("#road-sheet-container").removeClass("d-none");
+    $("#road-sheet-container").addClass("d-flex");
+};
+
+displayTripInfos = function(routes) {
+    var add = "<tr>";
+    add += "<td>";
+    add += routes.summary.totalDistance + "KM";
+    add += "</td>";
+    add += "<td>";
+    add += routes.summary.totalTime + "mn";
+    add += "</td>";
+    add += "<td>";
+    add += routes.name;
+    add += "</td>";
+    add += "</tr>";
+
+    $(add).appendTo("#trip-info-body");
+};

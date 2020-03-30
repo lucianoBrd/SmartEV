@@ -22,7 +22,7 @@ select {
 
 button {
     transition: background-color 0.3s, border-radius 0.3s !important;
-
+    border-radius: 1rem !important;
     &:hover {
         cursor: pointer;
         background-color: #ffdddc;
