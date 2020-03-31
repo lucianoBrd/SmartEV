@@ -69,9 +69,8 @@ initializeListeners = function (map) {
     });
 
     $(document).on('calculate-trip', function () {
-        var chargeCalculated = false;
-        //leaflet calculation
 
+        //leaflet calculation
         routing = L.Routing.control({
             waypoints: [
                 L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
@@ -88,18 +87,14 @@ initializeListeners = function (map) {
         routing._container.style.display = "None";
 
         routing.on('routesfound', function(e) {
-            if( !chargeCalculated) {
-                var routes = e.routes;
+            var routes = e.routes;
 
-                var steps = calculateChargeStep(routes[0].instructions, routes[0].coordinates);
+            var steps = calculateChargeStep(routes[0].instructions, routes[0].coordinates, routes[0].summary.totalDistance);
 
-                var waypointLength = this.getWaypoints().length;
+            var waypointLength = this.getWaypoints().length;
 
-                for(var i = 0; i<steps.length; i++) {
-                    this.spliceWaypoints(waypointLength - 1, 0, L.latLng(steps[i].lat, steps[i].lng));
-                }
-
-                chargeCalculated = true;
+            for(var i = 0; i<steps.length; i++) {
+                this.spliceWaypoints(waypointLength - 1, 0, L.latLng(steps[i].lat, steps[i].lng));
             }
         });
 
