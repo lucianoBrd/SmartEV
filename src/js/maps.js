@@ -79,6 +79,8 @@ loadCharges = function (map) {
             chargeData = JSON.parse(
                 JSON.stringify(data)
             );
+
+            CHARGES = chargeData;
         }
         $.each(chargeData, function (i, item) {
             marker =

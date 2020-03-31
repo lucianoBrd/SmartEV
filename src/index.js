@@ -15,5 +15,6 @@ import './js/geocoding'
 import './js/reset'
 import './js/listeners';
 import './js/autocomplete';
+import './js/intelligent';
 import './js/main';
 import 'leaflet.markercluster';

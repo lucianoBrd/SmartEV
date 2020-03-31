@@ -66,20 +66,43 @@ initializeListeners = function (map) {
     });
 
     $(document).on('calculate-trip', function () {
+        var chargeCalculated = false;
         //leaflet calculation
+
         routing = L.Routing.control({
             waypoints: [
                 L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
                 L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
             ],
             routeWhileDragging: false,
-            router: L.Routing.mapbox(token, { language: 'fr' })
+            router: L.Routing.mapbox(token, { language: 'fr' }),
+            autoRoute: false
         });
         routing.on('routeselected', function (e) {
             displayRoadSheet(e.route)
         }).addTo(map);
 
         routing._container.style.display = "None";
+
+        routing.on('routesfound', function(e) {
+            if( !chargeCalculated) {
+                var routes = e.routes;
+
+                var steps = calculateChargeStep(routes[0].instructions, routes[0].coordinates);
+
+                var waypointLength = this.getWaypoints().length;
+
+                for(var i = 0; i<steps.length; i++) {
+                    this.spliceWaypoints(waypointLength - 1, 0, L.latLng(steps[i].lat, steps[i].lng));
+                }
+
+                chargeCalculated = true;
+            }
+        });
+
+        routing.route();
+        routing._container.style.display = "None";
+
 
         removeUserMarkers(map);
     });

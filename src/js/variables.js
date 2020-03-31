@@ -56,3 +56,11 @@ Arrows = {
     "SharpRight":" arrow-right",
     "SharpLeft": "arrow-left"
 };
+
+CHARGES = null;
+
+CHARGE_RAD = 0.01;
+
+AUTONOMY = 400; //KM
+
+SAFE_PERCENTAGE = 15;
