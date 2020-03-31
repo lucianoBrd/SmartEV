@@ -1,6 +1,8 @@
 initializeListeners = function (map) {
     map.on('click', function (event) {
-        reverseGeocoding(event.latlng['lat'], event.latlng['lng']);
+        if (activeLocateMeInput !== null && !activeTrip) {
+            reverseGeocoding(event.latlng['lat'], event.latlng['lng']);
+        }
     });
 
     $('#location-marker').on('click', function (event) {
@@ -86,14 +88,14 @@ initializeListeners = function (map) {
 
         routing._container.style.display = "None";
 
-        routing.on('routesfound', function(e) {
+        routing.on('routesfound', function (e) {
             var routes = e.routes;
 
             var steps = calculateChargeStep(routes[0].instructions, routes[0].coordinates, routes[0].summary.totalDistance);
 
             var waypointLength = this.getWaypoints().length;
 
-            for(var i = 0; i<steps.length; i++) {
+            for (var i = 0; i < steps.length; i++) {
                 this.spliceWaypoints(waypointLength - 1, 0, L.latLng(steps[i].lat, steps[i].lng));
             }
         });
