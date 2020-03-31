@@ -42,6 +42,9 @@ models = {
 /* Selected model of car */
 model = models.renault.zoe;
 
+/* Cluster of marker */
+markers = null;
+
 /* List of lat/lng of the current trip selected by the user */
 TRIP = {
     departure: {
