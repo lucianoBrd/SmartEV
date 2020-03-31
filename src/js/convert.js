@@ -23,3 +23,9 @@ time = function (totalTime) {
     }
     return totalTime;
 };
+
+mtoKm = function (totalDistance) {
+    totalDistance = (totalDistance / 1000).toFixed(2);
+
+    return parseInt(totalDistance);
+};
