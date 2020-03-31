@@ -27,9 +27,10 @@ findCloserChargePoint = function (lat, lng){
         'lat': lat,
         'lng': lng
     };
+    var chargers = model.charges.list;
 
-    for(var i = 0; i<CHARGES.length; i++ ) {
-        charge = CHARGES[i];
+    for(var i = 0; i<chargers.length; i++ ) {
+        charge = chargers[i];
         chargeLat = charge.AddressInfo.Latitude;
         chargeLng = charge.AddressInfo.Longitude;
 
@@ -73,9 +74,11 @@ closeEnough = function(point, reference) {
 };
 
 lowBattery = function(distance){
-    var critical = AUTONOMY/SAFE_PERCENTAGE;
+    var autonomy = model.autonomy;
 
-    return (AUTONOMY - distance <= critical);
+    var critical = autonomy/SAFE_PERCENTAGE;
+
+    return (autonomy - distance <= critical);
 };
 
 
