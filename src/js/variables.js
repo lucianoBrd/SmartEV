@@ -17,14 +17,25 @@ models = {
         "zoe": {
             "autonomy": 250,
             "name": "zoe",
-            "charges" : null
+            "charges": {
+                "id": [
+                    25,
+                    1036
+                ],
+                "list": []
+            }
         }
     },
     "tesla": {
         "model3": {
             "autonomy": 400,
             "name": "model3",
-            "charges" : null
+            "charges": {
+                "id": [
+                    27
+                ],
+                "list": []
+            }
         }
     }
 };

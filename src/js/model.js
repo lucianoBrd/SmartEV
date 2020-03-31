@@ -2,6 +2,25 @@ modelNotFound = function () {
     $('#carSelection').addClass('is-invalid');
 };
 
+findCharges = function () {
+    /* For each station */
+    $.each(CHARGES, function (key, station) {
+
+        /* For each charger */
+        $.each(station.Connections, function (key, charger) {
+
+            /* For each id connection type of the model */
+            $.each(model.charges.id, function (key, id) {
+
+                /* Check if charger is compatible */
+                if (charger.ConnectionTypeID == id) {
+                    model.charges.list.push(station);
+                }
+            });
+        });
+    });
+};
+
 findModel = function () {
     var select = $('#carSelection');
     var selectedModel = $(select).val();
@@ -26,8 +45,10 @@ findModel = function () {
         return true;
     }
 
-    /* Find charges of the model */
-    model.charges = null; // TODO
+    /* Find charges compatible for the model */
+    if (model.charges.list.length == 0) {
+        findCharges();
+    }
 
     return false;
 };

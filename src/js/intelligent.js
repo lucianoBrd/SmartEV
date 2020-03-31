@@ -27,9 +27,10 @@ findCloserChargePoint = function (lat, lng){
         'lat': lat,
         'lng': lng
     };
+    var chargers = model.charges.list;
 
-    for(var i = 0; i<CHARGES.length; i++ ) {
-        charge = CHARGES[i];
+    for(var i = 0; i<chargers.length; i++ ) {
+        charge = chargers[i];
         chargeLat = charge.AddressInfo.Latitude;
         chargeLng = charge.AddressInfo.Longitude;
 
