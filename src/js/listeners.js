@@ -43,7 +43,10 @@ initializeListeners = function (map) {
     });
 
     $("#search-trip").on('click', function () {
-        var error = false;
+
+        /* Check model */
+        var error = findModel();
+
         //check if the input fields are setted
         $.each(TRIP, function (key, item) {
             if (item['lat'] == null || item['lng'] == null) {

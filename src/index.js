@@ -13,6 +13,7 @@ import './js/variables'
 import './js/animations'
 import './js/geocoding'
 import './js/reset'
+import './js/model'
 import './js/listeners';
 import './js/autocomplete';
 import './js/intelligent';

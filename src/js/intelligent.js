@@ -73,9 +73,11 @@ closeEnough = function(point, reference) {
 };
 
 lowBattery = function(distance){
-    var critical = AUTONOMY/SAFE_PERCENTAGE;
+    var autonomy = model.autonomy;
 
-    return (AUTONOMY - distance <= critical);
+    var critical = autonomy/SAFE_PERCENTAGE;
+
+    return (autonomy - distance <= critical);
 };
 
 
