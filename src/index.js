@@ -6,6 +6,7 @@ import './js/token';
 import './lib/leaflet/leaflet';
 import 'leaflet-routing-machine';
 import './js/variables';
+import './js/convert';
 import './js/maps';
 import '@fortawesome/fontawesome-free/js/all'
 import './js/variables'

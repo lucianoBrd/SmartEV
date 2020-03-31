@@ -224,24 +224,10 @@ displayTripInfos = function (routes) {
     var totalTime = routes.summary.totalTime / 60; /* Second to minute */
 
     /* Convert distance */
-    if (totalDistance >= 1000) {
-        /* In km */
-        totalDistance = (totalDistance / 1000).toFixed(2) + " KM";
-
-    } else {
-        /* In m */
-        totalDistance = totalDistance.toFixed(2) + " M";
-    }
+    totalDistance = distance(totalDistance);
 
     /* Convert time */
-    if (totalTime >= 60) {
-        /* In h */
-        totalTime = (totalTime / 60).toFixed(2) + " H";
-
-    } else {
-        /* In mn */
-        totalTime = totalTime.toFixed(2) + " MN";
-    }
+    totalTime = time(totalTime);
 
     var add = "<tr>";
     add += "<td>";
