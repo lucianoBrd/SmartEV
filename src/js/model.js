@@ -52,3 +52,13 @@ findModel = function () {
 
     return false;
 };
+
+initializeModel = function () {
+    findModel();
+    $('#carSelection').change(function () {
+        findModel();
+
+        /* Change text of model marker */
+        $('#model-marker-text').text(model.name);
+    });
+};

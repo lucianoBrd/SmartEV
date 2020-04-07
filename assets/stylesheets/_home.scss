@@ -19,7 +19,7 @@ body {
     width: 250px !important;
 }
 
-#location-marker {
+.control-marker {
     background-color: white;
     width: 5vh;
     height: 5vh;
@@ -30,6 +30,14 @@ body {
     &:hover {
         background-color: #ffbaba;
     }
+
+    &.active {
+        color: #ffbaba;
+    }
+}
+
+#model-marker-text {
+    text-transform: capitalize;
 }
 
 

@@ -18,5 +18,4 @@ jQuery(function ($) {
     /* Load charges */
     loadCharges(map);
 
-
 });
