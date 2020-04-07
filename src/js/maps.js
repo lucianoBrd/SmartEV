@@ -73,10 +73,10 @@ loadCharges = function (map) {
         /* Add markers to the map */
         createCluster(map, CHARGES);
 
-        /* Initialize marker */
-        initializeMarker(map);
         /* Initialize model */
         initializeModel();
+        /* Initialize marker */
+        initializeMarker(map);
 
     });
 }
