@@ -15,7 +15,8 @@ lng = 4.85;
 models = {
     "renault": {
         "zoe": {
-            "autonomy": 250,
+            "autonomy": 290,
+            "battery": 41,
             "name": "zoe",
             "charges": {
                 "id": [
@@ -28,7 +29,8 @@ models = {
     },
     "tesla": {
         "model3": {
-            "autonomy": 400,
+            "autonomy": 485,
+            "battery": 57,
             "name": "model3",
             "charges": {
                 "id": [
