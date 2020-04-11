@@ -22,7 +22,7 @@ autocomplete = function () {
     });
 
     function doneTyping () {
-        if (val !== '') {
+        if (!isEmpty(val)) {
 
             $.ajax({
                 url: URLS['searchGeocoding'] + locationIQToken + "&limit=5&format=json&q=" + val
@@ -55,5 +55,10 @@ autocomplete = function () {
                 console.log(data);
             });
         }
+    }
+
+    /* Check if string not empty or blank or contains only white-space */
+    function isEmpty(str) {
+        return (!str || 0 === str.length || /^\s*$/.test(str) || !str.trim());
     }
 };
