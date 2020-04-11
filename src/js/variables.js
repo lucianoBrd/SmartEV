@@ -11,12 +11,26 @@ URLS = {
 lat = 45.75;
 lng = 4.85;
 
+/* Relaxation ideas */
+relaxation = [
+    "regarder une série Netflix ! 🎬",
+    "écouter une musique douce 🎵",
+    "trouver votre voie. Partez à la recherche de vos talents, de ce qui a du sens pour vous… Qu’est-ce que vous aimez faire ? Quelles activités vous procurent du bien-être ?",
+    "aller courir dans la nature ! 🏆 Vous aérer : de plus en plus d’études montrent les vertus du contact avec la nature, qui nous aide à être plus serein(e), plus ancré(e).",
+    "découvrir le yoga, le tai-chi, la méthode Pilates. Ces pratiques vous aideront à vous retrouver avec vous-même, à vous détendre et à accueillir la vie telle qu’elle vient.",
+    "lire un livre inspirant et passionnant !"
+];
+
+/* Trip time in minute */
+tripTime = 0;
+
 /* Models of car */
 models = {
     "renault": {
         "zoe": {
             "autonomy": 290,
-            "battery": 41,
+            "battery": 41, /* kWh capacité batterie */
+            "powerCharger": 22, /* kW puissance de charge max */
             "name": "zoe",
             "charges": {
                 "id": [
@@ -31,6 +45,7 @@ models = {
         "model3": {
             "autonomy": 485,
             "battery": 57,
+            "powerCharger": 170,
             "name": "model3",
             "charges": {
                 "id": [

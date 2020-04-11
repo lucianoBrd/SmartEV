@@ -1,4 +1,4 @@
-distance = function (totalDistance) {
+formatDistance = function (totalDistance) {
     /* Convert distance */
     if (totalDistance >= 1000) {
         /* In km */
@@ -11,7 +11,7 @@ distance = function (totalDistance) {
     return totalDistance;
 };
 
-time = function (totalTime) {
+formatTime = function (totalTime) {
     /* Convert time */
     if (totalTime >= 60) {
         /* In h */

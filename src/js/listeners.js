@@ -75,10 +75,23 @@ initializeListeners = function (map) {
         //leaflet calculation
         routing = L.Routing.control({
             waypoints: [
-                L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
-                L.latLng(TRIP.destination['lat'], TRIP.destination['lng'])
+                L.Routing.waypoint(
+                    L.latLng(TRIP.departure['lat'], TRIP.departure['lng']),
+                    "<h3>Départ</h3>"
+                ),
+                L.Routing.waypoint(
+                    L.latLng(TRIP.destination['lat'], TRIP.destination['lng']),
+                    "<h3>Arrivée</h3>"
+                )
             ],
-            routeWhileDragging: false,
+            createMarker: function (i, wp, nWps) {
+                return L.marker(wp.latLng)
+                    .bindPopup(wp.name);
+            },
+            lineOptions: {
+                addWaypoints: false,
+                draggableWaypoints: false
+            },
             router: L.Routing.mapbox(token, { language: 'fr' }),
             autoRoute: false
         });
@@ -88,22 +101,59 @@ initializeListeners = function (map) {
 
         routing._container.style.display = "None";
 
+        /* Remove old markers */
+        removeUserMarkers(map);
+
         routing.on('routesfound', function (e) {
             var routes = e.routes;
 
             var steps = calculateChargeStep(routes[0].instructions, routes[0].coordinates, routes[0].summary.totalDistance);
 
+            /* Compute time to charge the char and 
+               add step to the routing for each steps */
+            var time = 0;
             var waypointLength = this.getWaypoints().length;
 
             for (var i = 0; i < steps.length; i++) {
-                this.spliceWaypoints(waypointLength - 1, 0, L.latLng(steps[i].lat, steps[i].lng));
+                var step = steps[i];
+                /* Compute time */
+                var t = computeTime(
+                    step.socCurrent,
+                    model.powerCharger,
+                    model.battery
+                );
+                time += t;
+
+                /* Add marker */
+                var display_name = '<h3>Pause de ' + formatTime(t) + '</h3>';
+                display_name += '<p>En arrivant, la batterie de la carlingue ' + model.name + ' sera de ' + Math.round(step.socCurrent) + '%</p>';
+                display_name += '<p>Profitez en pour ' + relaxation[Math.floor(Math.random() * relaxation.length)] + '</p>';
+
+                this.spliceWaypoints(
+                    waypointLength - 1,
+                    0,
+                    L.Routing.waypoint(
+                        L.latLng(step.lat, step.lng),
+                        display_name
+                    )
+                );
+            }
+
+            /* Add to trip time */
+            tripTime += time;
+    
+            /* Convert time */
+            var totalTime = formatTime(tripTime);
+    
+            /* Update trip time in the page  */
+            var tt = $('#trip-time');
+            if (tt) {
+                $(tt).text(totalTime);
             }
         });
 
         routing.route();
         routing._container.style.display = "None";
 
-
-        removeUserMarkers(map);
     });
 };

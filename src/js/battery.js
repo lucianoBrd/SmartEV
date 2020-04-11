@@ -39,7 +39,7 @@ var computeOvercome = function (
     battery,
     pc
 ) {
-    return 60 * ((socO - socC) / 100 ) * battery / pc;
+    return 60 * ((socO - socC) / 100) * battery / pc;
 };
 
 /**
@@ -50,8 +50,8 @@ var computeOvercome = function (
  * @return time in minutes
  */
 computeTime = function (
-    socCurrent, 
-    powerCharger, 
+    socCurrent,
+    powerCharger,
     battery
 ) {
     var socOvercome = socP(powerCharger);
@@ -61,9 +61,9 @@ computeTime = function (
     /* First overcome */
     if (socCurrent < socOvercome) {
         time = computeOvercome(
-            socOvercome, 
-            socCurrent, 
-            battery, 
+            socOvercome,
+            socCurrent,
+            battery,
             pc
         );
     }
@@ -125,5 +125,3 @@ computeTime = function (
     return time;
 
 };
-
-//console.log(computeTime(15, 22, 41));

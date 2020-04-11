@@ -130,17 +130,20 @@ displayTripInfos = function (routes) {
     var totalDistance = routes.summary.totalDistance;
     var totalTime = routes.summary.totalTime / 60; /* Second to minute */
 
+    /* Save trip time */
+    tripTime += totalTime;
+
     /* Convert distance */
-    totalDistance = distance(totalDistance);
+    totalDistance = formatDistance(totalDistance);
 
     /* Convert time */
-    totalTime = time(totalTime);
+    totalTime = formatTime(tripTime);
 
     var add = "<tr>";
     add += "<td>";
     add += totalDistance;
     add += "</td>";
-    add += "<td>";
+    add += '<td id="trip-time">';
     add += totalTime;
     add += "</td>";
     add += "<td>";
