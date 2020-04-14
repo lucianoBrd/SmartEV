@@ -116,10 +116,40 @@ initializeListeners = function (map) {
 
             for (var i = 0; i < steps.length; i++) {
                 var step = steps[i];
+                
+                /* Get the max power charger of the batterie */
+                var powerCharger = null;
+                $.each(step.charge.Connections, function (key, item) {
+                    $.each(model.charges.id, function (key, id) {
+                        if(id == item.id){
+                            var pkw = item.PowerKW;
+                            if (pkw) {
+                                if(pkw > model.powerCharger) {
+                                    /* Can't get more than the model */
+                                    powerCharger = model.powerCharger;
+                                } else {
+                                    if(powerCharger) {
+                                        if (powerCharger < pkw) {
+                                            /* Get the more powerfull */
+                                            powerCharger = pkw;
+                                        }
+                                    } else {
+                                        powerCharger = pkw;
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+
+                if (!powerCharger) {
+                    powerCharger = model.powerCharger;
+                }
+
                 /* Compute time */
                 var t = computeTime(
                     step.socCurrent,
-                    model.powerCharger,
+                    powerCharger,
                     model.battery
                 );
                 time += t;
@@ -141,10 +171,10 @@ initializeListeners = function (map) {
 
             /* Add to trip time */
             tripTime += time;
-    
+
             /* Convert time */
             var totalTime = formatTime(tripTime);
-    
+
             /* Update trip time in the page  */
             var tt = $('#trip-time');
             if (tt) {
