@@ -1,4 +1,4 @@
-distance = function (totalDistance) {
+formatDistance = function (totalDistance) {
     /* Convert distance */
     if (totalDistance >= 1000) {
         /* In km */
@@ -11,17 +11,16 @@ distance = function (totalDistance) {
     return totalDistance;
 };
 
-time = function (totalTime) {
+formatTime = function (minutes) {
     /* Convert time */
-    if (totalTime >= 60) {
-        /* In h */
-        totalTime = (totalTime / 60).toFixed(2) + " H";
+    var h = Math.floor(minutes / 60);
+    var m = Math.round(minutes % 60);
+    h = h < 10 ? '0' + h : h;
+    m = m < 10 ? '0' + m : m;
 
-    } else {
-        /* In mn */
-        totalTime = totalTime.toFixed(2) + " MN";
-    }
-    return totalTime;
+    var string = (h == '00' ? '' : (h + ' H ')) + (m == '00' ? '' : (m + ' MN'));
+
+    return string;
 };
 
 mtoKm = function (totalDistance) {

@@ -46,6 +46,11 @@ calculateChargeStep = function(instructions, coordinates, totalDistance) {
 
                     //then we add this charge point to the steps
                     if(charge) {
+                        /* Compute the percentage of battery */
+                        var d = (distance >= continuousAverage) ? (distance) : ((distance + nextDistance) / 2);
+                        d = d / model.autonomy;
+                        charge.socCurrent = d * 100;
+
                         steps.push(charge);
                     }
 
@@ -121,7 +126,8 @@ findCloserChargePoint = function (coordinates, middleIndex, chargePointsRange){
                         selectedPoint = {
                             'charge': charge,
                             'lat': chargeLat,
-                            'lng': chargeLng
+                            'lng': chargeLng,
+                            'socCurrent': null
                         };
                     }
                     break;

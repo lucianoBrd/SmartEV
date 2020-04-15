@@ -17,6 +17,7 @@ import './js/reset';
 import './js/model';
 import './js/listeners';
 import './js/autocomplete';
+import './js/battery';
 import './js/intelligent';
 import './js/main';
 import 'leaflet.markercluster';

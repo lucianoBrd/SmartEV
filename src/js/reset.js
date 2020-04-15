@@ -24,10 +24,12 @@ reset = function () {
 
     /* Remove the router */
     if (routing) {
-        var wayPoints = routing._selectedRoute.waypointIndices.length;
-        routing.spliceWaypoints(0, wayPoints);
+        routing.getPlan().setWaypoints({latLng: L.latLng([0, 0])});
         routing = null;
     }
+
+    /* Reset trip time */
+    tripTime = 0;
 };
 
 statusForm = function (active) {
