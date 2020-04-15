@@ -155,10 +155,17 @@ initializeListeners = function (map) {
                 time += t;
 
                 /* Add marker */
-                var display_name = '<h3>Pause de ' + formatTime(t) + '</h3>';
-                display_name += '<p>En arrivant, la batterie de la carlingue ' + model.name + ' sera de ' + Math.round(step.socCurrent) + '%</p>';
-                display_name += '<p>Profitez en pour ' + relaxation[Math.floor(Math.random() * relaxation.length)] + '</p>';
-
+                if(t > 0){
+                    var display_name = '<h3>Pause de ' + formatTime(t) + '</h3>';
+                    display_name += '<p>En arrivant, la batterie de la carlingue ' + model.name + ' sera de ' + Math.round(step.socCurrent) + '%</p>';
+                    display_name += '<p>Profitez en pour ' + relaxation[Math.floor(Math.random() * relaxation.length)] + '</p>';
+    
+                } else {
+                    var display_name = '<h3>Une pause s\'impose</h3>';
+                    display_name += '<p>Malheuresement nous n\'avons pas trouvé de chargeur plus proche.</p>';
+                    display_name += '<p>En arrivant, la batterie de la carlingue ' + model.name + ' sera de ' + (100 - Math.round(step.socCurrent)) + '%</p>';
+                }
+                
                 this.spliceWaypoints(
                     waypointLength - 1,
                     0,

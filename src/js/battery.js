@@ -47,7 +47,7 @@ var computeOvercome = function (
  * @param {*} socCurrent
  * @param {*} powerCharger
  * @param {*} battery
- * @return time in minutes
+ * @return time in minutes, 0 error case 
  */
 computeTime = function (
     socCurrent,
@@ -57,6 +57,11 @@ computeTime = function (
     var socOvercome = socP(powerCharger);
     var time = 0;
     var pc = powerCharger;
+
+    /* Error case */
+    if (socCurrent > 100 || socCurrent < 0) {
+        return 0;
+    }
 
     /* First overcome */
     if (socCurrent < socOvercome) {
