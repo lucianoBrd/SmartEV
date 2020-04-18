@@ -87,6 +87,9 @@ activeTrip = false;
 // Router from view
 routing = null;
 
+//if we find markers to charge
+failedCompute = false;
+
 userMarkers = [];
 
 Arrows = {
@@ -114,4 +117,4 @@ CHARGE_RAD = 0.01;
 
 SAFE_PERCENTAGE = 15;
 
-CHARGE_POINT_RANGE = 90;
+CHARGE_POINT_RANGE = 100;

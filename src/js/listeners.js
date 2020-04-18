@@ -71,7 +71,7 @@ initializeListeners = function (map) {
     });
 
     $(document).on('calculate-trip', function () {
-
+        $(document).trigger('start-loader');
         //leaflet calculation
         routing = L.Routing.control({
             waypoints: [
@@ -105,92 +105,56 @@ initializeListeners = function (map) {
         removeUserMarkers(map);
 
         routing.on('routesfound', function (e) {
+
             var routes = e.routes;
 
             var steps = calculateChargeStep(routes[0].instructions, routes[0].coordinates, routes[0].summary.totalDistance);
 
-            /* Compute time to charge the char and 
-               add step to the routing for each steps */
-            var time = 0;
-            var waypointLength = this.getWaypoints().length;
+            if(steps) {
+                /* Compute time to charge the char and
+                 add step to the routing for each steps */
+                var waypointLength = this.getWaypoints().length;
 
-            for (var i = 0; i < steps.length; i++) {
-                var step = steps[i];
-                
-                /* Get the max power charger of the batterie */
-                var powerCharger = null;
-                $.each(step.charge.Connections, function (key, item) {
-                    $.each(model.charges.id, function (key, id) {
-                        if(id == item.id){
-                            var pkw = item.PowerKW;
-                            if (pkw) {
-                                if(pkw > model.powerCharger) {
-                                    /* Can't get more than the model */
-                                    powerCharger = model.powerCharger;
-                                } else {
-                                    if(powerCharger) {
-                                        if (powerCharger < pkw) {
-                                            /* Get the more powerfull */
-                                            powerCharger = pkw;
-                                        }
-                                    } else {
-                                        powerCharger = pkw;
-                                    }
-                                }
-                            }
-                        }
-                    });
-                });
+                //create markers and return time to add
+                var time = createTripStepMarkers(steps, waypointLength, this);
 
-                if (!powerCharger) {
-                    powerCharger = model.powerCharger;
+                /* Add to trip time */
+                tripTime += time;
+
+                /* Convert time */
+                var totalTime = formatTime(tripTime);
+
+                /* Update trip time in the page  */
+                var tt = $('#trip-time');
+                if (tt) {
+                    $(tt).text(totalTime);
                 }
 
-                /* Compute time */
-                var t = computeTime(
-                    step.socCurrent,
-                    powerCharger,
-                    model.battery
-                );
-                time += t;
-
-                /* Add marker */
-                if(t > 0){
-                    var display_name = '<h3>Pause de ' + formatTime(t) + '</h3>';
-                    display_name += '<p>En arrivant, la batterie de la carlingue ' + model.name + ' sera de ' + Math.round(step.socCurrent) + '%</p>';
-                    display_name += '<p>Profitez en pour ' + relaxation[Math.floor(Math.random() * relaxation.length)] + '</p>';
-    
-                } else {
-                    var display_name = '<h3>Une pause s\'impose</h3>';
-                    display_name += '<p>Malheuresement nous n\'avons pas trouvé de chargeur plus proche.</p>';
-                    display_name += '<p>En arrivant, la batterie de la carlingue ' + model.name + ' sera de ' + (100 - Math.round(step.socCurrent)) + '%</p>';
-                }
-                
-                this.spliceWaypoints(
-                    waypointLength - 1,
-                    0,
-                    L.Routing.waypoint(
-                        L.latLng(step.lat, step.lng),
-                        display_name
-                    )
-                );
-            }
-
-            /* Add to trip time */
-            tripTime += time;
-
-            /* Convert time */
-            var totalTime = formatTime(tripTime);
-
-            /* Update trip time in the page  */
-            var tt = $('#trip-time');
-            if (tt) {
-                $(tt).text(totalTime);
             }
         });
 
         routing.route();
         routing._container.style.display = "None";
+    });
 
+    $(document).on('start-loader', function () {
+        $(".wrapper").addClass('back-opacity');
+        $('#loader').removeClass('d-none');
+        $('#loader').addClass('d-block');
+    });
+
+    $(document).on('finish-loader', function () {
+        if(failedCompute) {
+            setTimeout(function() {
+                $("#search-trip").click();
+                $('#loader').addClass('d-none');
+                $('#loader').removeClass('d-block');
+                $(".wrapper").removeClass('back-opacity');
+            }, 2000);
+        } else {
+            $('#loader').addClass('d-none');
+            $('#loader').removeClass('d-block');
+            $(".wrapper").removeClass('back-opacity');
+        }
     });
 };

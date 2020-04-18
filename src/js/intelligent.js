@@ -2,9 +2,10 @@
 * This function is the main algorithm for finding charges points in a trip. It calculate if the user needs to charge and if yes, return a list of charge points
 * */
 calculateChargeStep = function(instructions, coordinates, totalDistance) {
+    failedCompute = false;
     //if the distance is lower than the autonomy, we don have to find any charge point
     if ((mtoKm(totalDistance)) > model.autonomy) {
-        var distance = 0, j=1, charge = false, steps = [];
+        var distance = 0, j=1, charge = false, steps = [], stepsAdded = 0, middleIndex;
 
         //calculate approximate number of steps
         var numberOfSteps = Math.round((mtoKm(totalDistance)) / model.autonomy);
@@ -34,24 +35,30 @@ calculateChargeStep = function(instructions, coordinates, totalDistance) {
                     middleIndex = Math.round((instruction.index + nextInstruction.index)/2);
 
                     //and we find the closer charge point on the road
-                    while(!charge) {
-                        charge = findCloserChargePoint(coordinates, middleIndex, CHARGE_POINT_RANGE*j);
-                        j++;
-
-                        if( j > 1000) {
-                            break;
-                        }
-                    }
-                    j = 0;
+                    charge = searchChargePoint(coordinates, middleIndex);
 
                     //then we add this charge point to the steps
                     if(charge) {
                         /* Compute the percentage of battery */
-                        var d = (distance >= continuousAverage) ? (distance) : ((distance + nextDistance) / 2);
-                        d = d / model.autonomy;
-                        charge.socCurrent = d * 100;
+                        var batteryLevel = calculateBatteryPercentage(distance, nextDistance, continuousAverage);
+
+                        if (batteryLevel <= 0 || batteryLevel >= 100 ) {
+                           middleIndex = ((stepsAdded / numberOfSteps) * coordinates.length) - CHARGE_POINT_RANGE*2;
+
+                           charge = searchChargePoint(coordinates, middleIndex);
+
+                           if (!charge) {
+                               failedCompute = true;
+                               $(document).trigger('finish-loader');
+
+                               return false;
+                           }
+                        }
+                        charge.socCurrent = batteryLevel;
+
 
                         steps.push(charge);
+                        stepsAdded ++;
                     }
 
                     //and reset the distance
@@ -60,14 +67,30 @@ calculateChargeStep = function(instructions, coordinates, totalDistance) {
                 }
             }
         }
+        $(document).trigger('finish-loader');
 
         //finally return the charge points
         return steps;
     }
 
-    return [];
+    $(document).trigger('finish-loader');
+    return true;
 };
 
+searchChargePoint = function (coordinates, middleIndex) {
+    var j= 0, charge = false;
+
+    while(!charge) {
+        charge = findCloserChargePoint(coordinates, middleIndex, CHARGE_POINT_RANGE*j);
+        j++;
+
+        if( j > 500) {
+            break;
+        }
+    }
+
+    return charge;
+};
 
 /*
 * This function find the closer charge point from a reference point (lat and lng)
@@ -169,6 +192,12 @@ lowBattery = function(distance){
     var critical = autonomy/SAFE_PERCENTAGE;
 
     return (autonomy - distance <= critical);
+};
+
+calculateBatteryPercentage = function (distance, nextDistance, continuousAverage) {
+    var distanceAverage = (distance >= continuousAverage) ? (distance) : ((distance + nextDistance) / 2);
+
+    return (1-(distanceAverage / model.autonomy)) * 100;
 };
 
 
