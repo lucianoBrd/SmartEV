@@ -124,7 +124,7 @@ initializeMarker = function (map) {
 };
 
 createTripStepMarkers = function (steps, waypointLength, routing) {
-    time = 0;
+    var time = 0;
 
     for (var i = 0; i < steps.length; i++) {
         var step = steps[i];

@@ -19,6 +19,9 @@
     <!-- Style -->
     <link rel="stylesheet" href="public/styles.css">
 
+    <!-- Logo -->
+    <link rel="icon" type="image/png" href="public/images/car.png" />
+
 </head>
 
 <body>
@@ -100,10 +103,16 @@
                                         </span>
                                     </div>
 
+                                    <!-- Error message -->
+                                    <div class="invalid-feedback text-center" id="input-error">
+                                        Désolé, impossible de trouver un itinéraire : il n'y a pas assez de points de charge 😅
+                                    </div>
+
                                     <!-- Submit button -->
                                     <div class="form-group d-flex flex-row justify-content-around">
-                                        <label class="input-group-text label-style"><i
-                                                class="fas fa-search"></i></label>
+                                        <label class="input-group-text label-style">
+                                            <i class="fas fa-search"></i>
+                                        </label>
                                         <button type="button" id="search-trip"
                                             class="form-control">Rechercher</button>
                                     </div>

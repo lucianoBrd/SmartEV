@@ -49,6 +49,9 @@ initializeListeners = function (map) {
         /* Check model */
         var error = findModel();
 
+        /* Remove error text */
+        showError(false);
+
         //check if the input fields are setted
         $.each(TRIP, function (key, item) {
             if (item['lat'] == null || item['lng'] == null) {
@@ -145,8 +148,14 @@ initializeListeners = function (map) {
 
     $(document).on('finish-loader', function () {
         if(failedCompute) {
+            /* Error case */
             setTimeout(function() {
-                $("#search-trip").click();
+                /* Display error text */
+                showError(true);
+
+                /* Reset Trip */
+                statusForm(false);
+
                 $('#loader').addClass('d-none');
                 $('#loader').removeClass('d-block');
                 $(".wrapper").removeClass('back-opacity');

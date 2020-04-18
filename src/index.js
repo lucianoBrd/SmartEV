@@ -6,6 +6,7 @@ import './js/token';
 import './lib/leaflet/leaflet';
 import 'leaflet-routing-machine';
 import './js/variables';
+import './js/error';
 import './js/convert';
 import './js/marker';
 import './js/maps';
