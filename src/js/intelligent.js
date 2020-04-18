@@ -47,6 +47,13 @@ calculateChargeStep = function(instructions, coordinates, totalDistance) {
 
                            charge = searchChargePoint(coordinates, middleIndex);
 
+                           /* Compute new level of battery */
+                           batteryLevel = calculateBatteryPercentage(
+                               distance - CHARGE_POINT_RANGE, 
+                               nextDistance, 
+                               continuousAverage
+                            );
+
                            if (!charge) {
                                failedCompute = true;
                                $(document).trigger('finish-loader');
