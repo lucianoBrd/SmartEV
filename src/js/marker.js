@@ -101,7 +101,7 @@ createCluster = function (map, charges) {
         map.addLayer(
             markers
         );
-}
+};
 
 initializeMarker = function (map) {
     $('#model-marker').click(function () {
@@ -121,4 +121,72 @@ initializeMarker = function (map) {
             createCluster(map, CHARGES);
         }
     });
-}
+};
+
+createTripStepMarkers = function (steps, waypointLength, routing) {
+    var time = 0;
+
+    for (var i = 0; i < steps.length; i++) {
+        var step = steps[i];
+
+        /* Get the max power charger of the batterie */
+        var powerCharger = null;
+        $.each(step.charge.Connections, function (key, item) {
+            $.each(model.charges.id, function (key, id) {
+                if (id == item.id) {
+                    var pkw = item.PowerKW;
+                    if (pkw) {
+                        if (pkw > model.powerCharger) {
+                            /* Can't get more than the model */
+                            powerCharger = model.powerCharger;
+                        } else {
+                            if (powerCharger) {
+                                if (powerCharger < pkw) {
+                                    /* Get the more powerfull */
+                                    powerCharger = pkw;
+                                }
+                            } else {
+                                powerCharger = pkw;
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        if (!powerCharger) {
+            powerCharger = model.powerCharger;
+        }
+
+        /* Compute time */
+        var t = computeTime(
+            step.socCurrent,
+            powerCharger,
+            model.battery
+        );
+        time += t;
+
+        /* Add marker */
+        if (t > 0) {
+            var display_name = '<h3>Pause de ' + formatTime(t) + '</h3>';
+            display_name += '<p>En arrivant, la batterie de la carlingue ' + model.name + ' sera de ' + Math.round(step.socCurrent) + '%</p>';
+            display_name += '<p>Profitez en pour ' + relaxation[Math.floor(Math.random() * relaxation.length)] + '</p>';
+
+        } else {
+            var display_name = '<h3>Une pause s\'impose</h3>';
+            display_name += '<p>Malheureusement nous n\'avons pas trouvé de chargeur plus proche.</p>';
+            display_name += '<p>En arrivant, la batterie de la carlingue ' + model.name + ' sera de ' + (100 - Math.round(step.socCurrent)) + '%</p>';
+        }
+
+        routing.spliceWaypoints(
+            waypointLength - 1,
+            0,
+            L.Routing.waypoint(
+                L.latLng(step.lat, step.lng),
+                display_name
+            )
+        );
+    }
+
+    return time;
+};
